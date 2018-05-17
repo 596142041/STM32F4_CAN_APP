@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<JScopeProject>
+    <FileVersion major="1" minor="1" />
+    <Project>
+        <Configuration>
+            <JLink>
+                <Options Connection="1" IsRTTSession="0" IsRTTWithTimeStamp="1" SamplingPeriod="100" SerialNo="0" JTAG_IRPre="-1" JTAG_DRPre="-1" IP="" TargetDevice="STM32F407IG" TargetInterface="SWD" InterfaceSpeed="900" />
+            </JLink>
+            <ScriptFile Name="H:\Project\STM32_prj\STM32F4_CAN_APP\test.jscope\unspecified" />
+            <ElfFile Name="H:\Project\STM32_prj\STM32F4_CAN_APP\output\APP.axf" />
+            <DataFile Name="" />
+            <RawFile Name="" />
+            <Scope>
+                <Options TimeResolutionUs="500000" />
+            </Scope>
+            <Trigger>
+                <Options Level="0.000000" Symbol="flag" On="0" Auto="0" Rise="0" Fall="1" />
+            </Trigger>
+        </Configuration>
+        <Windows>
+            <Graph Show="1" />
+            <Watch Show="1" />
+        </Windows>
+        <SelectedSymbols>
+            <Symbol>
+                <Options Name="count" Address="0x20000000" Type="ushort" TypeID="7" Size="2" GraphColorRed="255" GraphColorGreen="215" GraphColorBlue="0" YMinSampled="0" YMaxSampled="49" YAvgSampled="16" Offset="4" ShowInGraph="1" ACCoupling="0" YOffset="100" IsAutoConfig="0" YResolution="10" MaxValue="4130" File="..\user\src\main.c" Scope="0" DrawStyle="0" />
+            </Symbol>
+            <Symbol>
+                <Options Name="flag" Address="0x20000002" Type="uchar" TypeID="6" Size="1" GraphColorRed="160" GraphColorGreen="32" GraphColorBlue="240" YMinSampled="0" YMaxSampled="255" YAvgSampled="190" Offset="6" ShowInGraph="1" ACCoupling="0" YOffset="100" IsAutoConfig="0" YResolution="50" MaxValue="633" File="..\user\src\main.c" Scope="0" DrawStyle="0" />
+            </Symbol>
+        </SelectedSymbols>
+    </Project>
+</JScopeProject>
