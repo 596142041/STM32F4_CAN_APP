@@ -13,19 +13,16 @@
 #include "USARt1.h"  
 #include "timer.h"
 #include "os.h"
+#include "CANB.h"
 extern CanRxMsg CAN1_RxMessage;
 extern volatile uint8_t CAN1_CanRxMsgFlag;//接收到CAN数据后的标志 
 void Led_GPIO_Config(void);
-
 u16 count = 0;
 void task_10ms(void);
 void task_50ms(void);
 void task_5ms(void);
 void task_1000ms(void);
-eMBErrorCode Code, error_code;
-u8 dir = 0;
-unsigned short int speed_fbk = 0;
-unsigned short int speed_ref = 0;
+eMBErrorCode Code, error_code; 
 int main(void)
 { 
 	int i;
@@ -40,6 +37,7 @@ int main(void)
 	}
 	__enable_irq(); 
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4); 
+	CAN_tx_msg_init();
 	CAN_Configuration(250000);
 	Led_GPIO_Config();
 	taskinit();
@@ -80,13 +78,26 @@ int main(void)
 			}
 			tasktimer[i].flag = 0;
 		}
-
-		
 	}
 }
 void task_5ms(void)
 {
-	//canbtransmit();
+	
+	if(CAN_MessagePending(CAN1,CAN_FIFO0) !=0)
+	{
+		CAN_Receive(CAN1,CAN_FIFO0, &CAN1_RxMessage);
+		CAN1_CanRxMsgFlag = 1;
+	}
+	else
+	{
+		canbtransmit();
+	}
+	if(CAN1_CanRxMsgFlag)
+	{
+		CAN_BOOT_ExecutiveCommand(&CAN1_RxMessage);
+		CAN1_CanRxMsgFlag = 0; 
+	}
+	 
 }
 void task_10ms(void)
 {
@@ -97,11 +108,7 @@ void task_10ms(void)
 }
 void task_50ms(void)
 {
-	if(CAN1_CanRxMsgFlag)
-	{
-		CAN_BOOT_ExecutiveCommand(&CAN1_RxMessage);
-		CAN1_CanRxMsgFlag = 0; 
-	}
+
 }
 void task_1000ms(void)
 { 
@@ -120,8 +127,7 @@ void task_1000ms(void)
 		}
 		else
 		{
-			GPIO_SetBits(GPIOF,GPIO_Pin_8);
-			
+			GPIO_SetBits(GPIOF,GPIO_Pin_8); 
 		}
 }
 int fputc(int ch, FILE *f)
