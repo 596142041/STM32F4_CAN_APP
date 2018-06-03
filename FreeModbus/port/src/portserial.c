@@ -22,26 +22,26 @@ void prvvUARTTxReadyISR( void );
 void prvvUARTRxISR( void );
 void vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
 {
-	if (xRxEnable)  //½ÓÊÕÊ¹ÄÜ
+	if (xRxEnable)  //æ¥æ”¶ä½¿èƒ½
 	{
-		USART_ITConfig(USE_USART, USART_IT_RXNE, ENABLE);  //Ê¹ÄÜ½ÓÊÕÖĞ¶Ï
-		RX_EN;//½ÓÊÕ
+		USART_ITConfig(USE_USART, USART_IT_RXNE, ENABLE);  //ä½¿èƒ½æ¥æ”¶ä¸­æ–­
+		RX_EN;//æ¥æ”¶
 	}
-	else  //Ê§ÄÜ
+	else  //å¤±èƒ½
 	{
-		USART_ITConfig(USE_USART, USART_IT_RXNE, DISABLE);  //Ê§ÄÜ½ÓÊÕÖĞ¶Ï
-		TX_EN //»Ö¸´·¢ËÍ
+		USART_ITConfig(USE_USART, USART_IT_RXNE, DISABLE);  //å¤±èƒ½æ¥æ”¶ä¸­æ–­
+		TX_EN //æ¢å¤å‘é€
 	}
 	
-	if (xTxEnable)  //·¢ËÍÊ¹ÄÜ
+	if (xTxEnable)  //å‘é€ä½¿èƒ½
 	{
-		USART_ITConfig(USE_USART, USART_IT_TC, ENABLE);  //Ê¹ÄÜ
-		TX_EN //·¢ËÍ
+		USART_ITConfig(USE_USART, USART_IT_TC, ENABLE);  //ä½¿èƒ½
+		TX_EN //å‘é€
 	}
-	else  //Ê§ÄÜ
+	else  //å¤±èƒ½
 	{
-		USART_ITConfig(USE_USART, USART_IT_TC, DISABLE);  //Ê§ÄÜ
-		RX_EN//ÉèÖÃ½ÓÊÕ
+		USART_ITConfig(USE_USART, USART_IT_TC, DISABLE);  //å¤±èƒ½
+		RX_EN//è®¾ç½®æ¥æ”¶
 	}
 }
 
@@ -51,22 +51,22 @@ BOOL xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBPar
 	USART_InitTypeDef USART_InitStructure;
 	NVIC_InitTypeDef  NVIC_InitStructure;
 	
-	(void)ucPORT;  //²»ĞŞ¸Ä´®¿ÚºÅ
-	(void)ucDataBits;  //²»ĞŞ¸ÄÊı¾İÎ»³¤¶È
-	(void)eParity;  //²»ĞŞ¸Ä¼ìÑé¸ñÊ½
+	(void)ucPORT;  //ä¸ä¿®æ”¹ä¸²å£å·
+	(void)ucDataBits;  //ä¸ä¿®æ”¹æ•°æ®ä½é•¿åº¦
+	(void)eParity;  //ä¸ä¿®æ”¹æ£€éªŒæ ¼å¼
 	
 	RCC_AHB1PeriphClockCmd(USART_Tx_GPIO_CLK|USART_Rx_GPIO_CLK|RS485_EN_GPIO_CLK, ENABLE);
 	RCC_APB1PeriphClockCmd(USE_USART_CLK, ENABLE);
 	
 	//
-	//¹Ü½Å¸´ÓÃ
+	//ç®¡è„šå¤ç”¨
 	//
 	GPIO_PinAFConfig(USART_Tx_GPIO, GPIO_PinSource10, GPIO_AF_USART3);
 	GPIO_PinAFConfig(USART_Rx_GPIO, GPIO_PinSource11, GPIO_AF_USART3);
 	
 	//
-	//·¢ËÍ¹Ü½Å PA.02
-	//½ÓÊÕ¹Ü½Å PA.03
+	//å‘é€ç®¡è„š PA.02
+	//æ¥æ”¶ç®¡è„š PA.03
 	//
 	GPIO_InitStructure.GPIO_Pin   = USART_Tx_Pin;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -77,7 +77,7 @@ BOOL xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBPar
 	GPIO_InitStructure.GPIO_Pin   = USART_Rx_Pin;
 	GPIO_Init(USART_Rx_GPIO, &GPIO_InitStructure);
 	//
-	//485Ğ¾Æ¬·¢ËÍ½ÓÊÕ¿ØÖÆ¹Ü½Å
+	//485èŠ¯ç‰‡å‘é€æ¥æ”¶æ§åˆ¶ç®¡è„š
 	//
 	GPIO_InitStructure.GPIO_Pin   = RS485_EN_Pin;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
@@ -87,9 +87,9 @@ BOOL xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBPar
 	GPIO_Init(RS485_EN_GPIO, &GPIO_InitStructure);
 	
 	//
-	//ÅäÖÃ´®¿Ú²ÎÊı
+	//é…ç½®ä¸²å£å‚æ•°
 	//
-	USART_InitStructure.USART_BaudRate            = ulBaudRate;  //Ö»ĞŞ¸Ä²¨ÌØÂÊ
+	USART_InitStructure.USART_BaudRate            = ulBaudRate;  //åªä¿®æ”¹æ³¢ç‰¹ç‡
 	USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
 	USART_InitStructure.USART_StopBits            = USART_StopBits_1;
 	USART_InitStructure.USART_Parity              = USART_Parity_No;
@@ -97,12 +97,12 @@ BOOL xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBPar
 	USART_InitStructure.USART_Parity              = USART_Mode_Rx | USART_Mode_Tx;
 	USART_Init(USE_USART, &USART_InitStructure);
 	//
-	//Ê¹ÄÜ´®¿Ú
+	//ä½¿èƒ½ä¸²å£
 	//
 	USART_Cmd(USE_USART, ENABLE);
 	
 	//
-	//ÅäÖÃÖĞ¶ÏÓÅÏÈ¼¶
+	//é…ç½®ä¸­æ–­ä¼˜å…ˆçº§
 	//
 	NVIC_InitStructure.NVIC_IRQChannel                   =  USART3_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
@@ -115,27 +115,27 @@ BOOL xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBPar
 
 BOOL xMBPortSerialPutByte( CHAR ucByte )
 {   
-	USART_SendData(USE_USART, ucByte);  //·¢ËÍÒ»¸ö×Ö½Ú
+	USART_SendData(USE_USART, ucByte);  //å‘é€ä¸€ä¸ªå­—èŠ‚
 	return TRUE;
 }
 
 BOOL xMBPortSerialGetByte( CHAR * pucByte )
 {
-	*pucByte = USART_ReceiveData(USE_USART);  //½ÓÊÕÒ»¸ö×Ö½Ú
+	*pucByte = USART_ReceiveData(USE_USART);  //æ¥æ”¶ä¸€ä¸ªå­—èŠ‚
 	return TRUE;
 }
 void prvvUARTTxReadyISR( void )
 {
-    pxMBFrameCBTransmitterEmpty(  );//ÔÚ·¢ËÍÍê³ÉÖĞ¶Ïµ÷ÓÃ¸Ãº¯Êı
+    pxMBFrameCBTransmitterEmpty(  );//åœ¨å‘é€å®Œæˆä¸­æ–­è°ƒç”¨è¯¥å‡½æ•°
 }
 void prvvUARTRxISR( void )
 {
-    pxMBFrameCBByteReceived(  );//ÔÚ½ÓÊÕÖĞ¶Ïº¯Êıµ÷ÓÃ¸Ãº¯Êı
+    pxMBFrameCBByteReceived(  );//åœ¨æ¥æ”¶ä¸­æ–­å‡½æ•°è°ƒç”¨è¯¥å‡½æ•°
 }
 
 /**
   *****************************************************************************
-  * @Name   : ´®¿ÚÖĞ¶Ï·şÎñº¯Êı
+  * @Name   : ä¸²å£ä¸­æ–­æœåŠ¡å‡½æ•°
   *
   * @Brief  : none
   *
@@ -148,13 +148,13 @@ void prvvUARTRxISR( void )
 **/
 void  USART3_IRQHandler(void)
 {
-	if (USART_GetITStatus(USE_USART, USART_IT_RXNE) == SET)  //½ÓÊÕÖĞ¶Ï
+	if (USART_GetITStatus(USE_USART, USART_IT_RXNE) == SET)  //æ¥æ”¶ä¸­æ–­
 	{
 		prvvUARTRxISR();
 		USART_ClearITPendingBit(USE_USART, USART_IT_RXNE);
 	}
 	
-	if (USART_GetITStatus(USE_USART, USART_IT_TC) == SET)  //·¢ËÍÖĞ¶Ï
+	if (USART_GetITStatus(USE_USART, USART_IT_TC) == SET)  //å‘é€ä¸­æ–­
 	{
 		prvvUARTTxReadyISR();
 		USART_ClearITPendingBit(USE_USART, USART_IT_TC);
