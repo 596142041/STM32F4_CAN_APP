@@ -3,11 +3,11 @@
 /* ----------------------- Static functions ---------------------------------*/
 eMBException    prveMBError2Exception( eMBErrorCode eErrorCode );
 /************************************************************** 
-* 0x41 Ð´µ¥¸ö±£³Ö¼Ä´æÆ÷,±£´æÖÁSPI_FLASH
-* 0x42 Ð´¶à¸ö¼Ä´æÆ÷±£´æÖÁSPI_FLASH
-* 0x43 ´ÓSPI_FLASH¶ÁÈ¡Êý¾Ý
+* 0x41 å†™å•ä¸ªä¿æŒå¯„å­˜å™¨,ä¿å­˜è‡³SPI_FLASH
+* 0x42 å†™å¤šä¸ªå¯„å­˜å™¨ä¿å­˜è‡³SPI_FLASH
+* 0x43 ä»ŽSPI_FLASHè¯»å–æ•°æ®
 ****************************************************************/
-#if FUN_READ_HOLDING_ENABLED > 0  //0x43 ´ÓSPI_FLASH¶ÁÈ¡Êý¾Ý
+#if FUN_READ_HOLDING_ENABLED > 0  //0x43 ä»ŽSPI_FLASHè¯»å–æ•°æ®
 eMBException Fun_ReadHoldingRegister( UCHAR * pucFrame, USHORT * usLen )
 {
 	  USHORT          usRegAddress;
@@ -52,7 +52,7 @@ eMBException Fun_ReadHoldingRegister( UCHAR * pucFrame, USHORT * usLen )
 }
 #endif
 
-#if FUN_WRITE_HOLDING_ENABLED > 0 //0x41 Ð´µ¥¸ö±£³Ö¼Ä´æÆ÷,±£´æÖÁSPI_FLASH
+#if FUN_WRITE_HOLDING_ENABLED > 0 //0x41 å†™å•ä¸ªä¿æŒå¯„å­˜å™¨,ä¿å­˜è‡³SPI_FLASH
 eMBException Fun_WriteHoldingRegister( UCHAR * pucFrame, USHORT * usLen )
 {
 		 USHORT          usRegAddress;
@@ -76,7 +76,7 @@ eMBException Fun_WriteHoldingRegister( UCHAR * pucFrame, USHORT * usLen )
 }
 #endif
 
-#if FUN_WRITE_MULTIPLE_HOLDING_ENABLED > 0 // 0x42 Ð´¶à¸ö¼Ä´æÆ÷±£´æÖÁSPI_FLASH
+#if FUN_WRITE_MULTIPLE_HOLDING_ENABLED > 0 // 0x42 å†™å¤šä¸ªå¯„å­˜å™¨ä¿å­˜è‡³SPI_FLASH
 eMBException Fun_WriteMultipleHoldingRegister( UCHAR * pucFrame, USHORT * usLen )
 {
  USHORT          usRegAddress;
@@ -121,39 +121,39 @@ eMBException Fun_WriteMultipleHoldingRegister( UCHAR * pucFrame, USHORT * usLen 
 #endif 
 /**
   *****************************************************************************
-  * @Name   : ²Ù×÷±£³Ö¼Ä´æÆ÷
+  * @Name   : æ“ä½œä¿æŒå¯„å­˜å™¨
   *
-  * @Brief  : ¶ÔÓ¦¹¦ÄÜÂë  0x41 Ð´µ¥¸ö±£³Ö¼Ä´æÆ÷,±£´æÖÁSPI_FLASH
-  * 											0x42 Ð´¶à¸ö¼Ä´æÆ÷±£´æÖÁSPI_FLASH
-  *												0x43 ´ÓSPI_FLASH¶ÁÈ¡Êý¾Ý
+  * @Brief  : å¯¹åº”åŠŸèƒ½ç   0x41 å†™å•ä¸ªä¿æŒå¯„å­˜å™¨,ä¿å­˜è‡³SPI_FLASH
+  * 											0x42 å†™å¤šä¸ªå¯„å­˜å™¨ä¿å­˜è‡³SPI_FLASH
+  *												0x43 ä»ŽSPI_FLASHè¯»å–æ•°æ®
   *
-  * @Input  : *pucRegBuffer£ºÊý¾Ý»º³åÇø£¬ÏìÓ¦Ö÷»úÓÃ
-  *           usAddress:     ¼Ä´æÆ÷µØÖ·
-  *           usNRegs:       ²Ù×÷¼Ä´æÆ÷¸öÊý
-  *           eMode:         ¹¦ÄÜÂë
+  * @Input  : *pucRegBufferï¼šæ•°æ®ç¼“å†²åŒºï¼Œå“åº”ä¸»æœºç”¨
+  *           usAddress:     å¯„å­˜å™¨åœ°å€
+  *           usNRegs:       æ“ä½œå¯„å­˜å™¨ä¸ªæ•°
+  *           eMode:         åŠŸèƒ½ç 
   *
   * @Output : none
   *
-  * @Return : Modbus×´Ì¬ÐÅÏ¢
+  * @Return : ModbusçŠ¶æ€ä¿¡æ¯
   *****************************************************************************
 **/
 static eMBErrorCode  Fun_RegHolding( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegisterMode eMode )
 {
 	eMBErrorCode eStatus = MB_ENOERR; 
-	//ÅÐ¶ÏµØÖ·ÊÇ·ñºÏ·¨ 
+	//åˆ¤æ–­åœ°å€æ˜¯å¦åˆæ³• 
 	if((usAddress >= REG_HOLDING_START) && ((usAddress + usNRegs) <= (REG_HOLDING_START + REG_HOLDING_NREGS)))
 	{
 		switch(eMode)
 		{
-			case MB_REG_READ:  //¶Á±£³Ö¼Ä´æÆ÷ 	
+			case MB_REG_READ:  //è¯»ä¿æŒå¯„å­˜å™¨ 	
 					Read_Buffer(usAddress,usNRegs*2,pucRegBuffer);
 					break; 
-			case MB_REG_WRITE:  //Ð´±£³Ö¼Ä´æÆ÷ 
+			case MB_REG_WRITE:  //å†™ä¿æŒå¯„å­˜å™¨ 
 			SPI_Flash_WR(usAddress,usNRegs*2,pucRegBuffer);
 					break;
 		}
 	}
-	else  //´íÎóµØÖ·
+	else  //é”™è¯¯åœ°å€
 	{
 		eStatus = MB_ENOREG;
 	}

@@ -29,11 +29,11 @@
 #define Fun_WRITE_MUL_SIZE_MIN          ( 5 )
 #define Fun_WRITE_MUL_REGCNT_MAX        ( 0x0078 )
 /************************************************************** 
-* 0x41 写单个保持寄存器,保存至SPI_FLASH
-* 0x42 写多个寄存器保存至SPI_FLASH
-* 0x43 从SPI_FLASH读取数据
+* 0x41 鍐欏崟涓繚鎸佸瘎瀛樺櫒,淇濆瓨鑷砈PI_FLASH
+* 0x42 鍐欏涓瘎瀛樺櫒淇濆瓨鑷砈PI_FLASH
+* 0x43 浠嶴PI_FLASH璇诲彇鏁版嵁
 ****************************************************************/
-/**---------------新的功能函数使能----------------------------**/
+/**---------------鏂扮殑鍔熻兘鍑芥暟浣胯兘----------------------------**/
 #define FUN_READ_HOLDING_ENABLED    (1)
 #define FUN_WRITE_HOLDING_ENABLED   (1)
 #define FUN_WRITE_MULTIPLE_HOLDING_ENABLED (1)
