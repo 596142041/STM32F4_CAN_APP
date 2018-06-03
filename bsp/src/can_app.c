@@ -14,8 +14,8 @@ Device_INFO DEVICE_INFO =
 {
  
  .FW_Version.bits.Version       = 01,
- .FW_Version.bits.date          = 10,
- .FW_Version.bits.month         = 5,
+ .FW_Version.bits.date          = 03,
+ .FW_Version.bits.month         = 06,
  .FW_Version.bits.year          = 2018,
  .FW_TYPE.bits.FW_TYPE          = CAN_BL_APP,
  .Device_addr.bits.reserve      = 0x00,
