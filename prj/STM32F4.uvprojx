@@ -542,11 +542,6 @@
               <FilePath>..\FreeModbus\modbus\functions\mbfunccoils.c</FilePath>
             </File>
             <File>
-              <FileName>mbfuncdiag.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\FreeModbus\modbus\functions\mbfuncdiag.c</FilePath>
-            </File>
-            <File>
               <FileName>mbfuncdisc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FreeModbus\modbus\functions\mbfuncdisc.c</FilePath>
