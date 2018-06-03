@@ -1,8 +1,8 @@
 /****************************************************************************************
-*���ļ��ڲ��ĺ�����Ҫ������Ȧ�����л�ʹ��
-*�ļ���:mbutils.c
-*ԭ����:
-*�޸�:��ƷȻ
+*该文件内部的函数主要是在线圈操作中会使用
+*文件名:mbutils.c
+*原作者:
+*修改:廖品然
 ******************************************************************************************/
 
 /* ----------------------- System includes ----------------------------------*/
@@ -21,15 +21,15 @@
 
 /* ----------------------- Start implementation -----------------------------*/
 /****************************************************************************
-������:void xMBUtilSetBits( UCHAR * ucByteBuf, USHORT usBitOffset, UCHAR ucNBits, UCHAR ucValue )
-�������:
-ucByteBuf λ�洢�Ļ�������������2���ֽڵı�����
+函数名:void xMBUtilSetBits( UCHAR * ucByteBuf, USHORT usBitOffset, UCHAR ucNBits, UCHAR ucValue )
+输入参数:
+ucByteBuf 位存储的缓冲区。必须是2个字节的倍数。
  No length checking is performed and if usBitOffset / 8 is greater than the size of the buffer memory contents is overwritten.
-usBitOffset λ���õ���ʼ��ַ����һ��λ��ƫ��Ϊ0��
-ucNBits  ��Ҫ�޸ĵ�λ����������ֵ����С��8��
-ucValues λ����ֵ����usBitOffset�еĵ�һλ��ֵ��ucValues�������Чλ;
-����ֵ:��;
-����ʾ��:
+usBitOffset 位设置的起始地址，第一个位的偏移为0。
+ucNBits  需要修改的位的数量。该值必须小于8。
+ucValues 位的新值。在usBitOffset中的第一位的值是ucValues的最低有效位;
+返回值:无;
+函数示例:
  ucBits[2] = {0, 0};
 // Set bit 4 to 1 (read: set 1 bit starting at bit offset 4 to value 1)
 xMBUtilSetBits( ucBits, 4, 1, 1 );
@@ -38,8 +38,7 @@ xMBUtilSetBits( ucBits, 7, 2, 0x01 );
 // Set bits 8 - 11 to 0x05 and bits 12 - 15 to 0x0A;
 xMBUtilSetBits( ucBits, 8, 8, 0x5A);
 ***************************************************************************************/
-void xMBUtilSetBits( UCHAR * ucByteBuf, USHORT usBitOffset, UCHAR ucNBits,
-                UCHAR ucValue )
+void xMBUtilSetBits( UCHAR * ucByteBuf, USHORT usBitOffset, UCHAR ucNBits,UCHAR ucValue )
 {
     USHORT          usWordBuf;
     USHORT          usMask;
@@ -76,12 +75,12 @@ void xMBUtilSetBits( UCHAR * ucByteBuf, USHORT usBitOffset, UCHAR ucNBits,
     ucByteBuf[usByteOffset + 1] = ( UCHAR )( usWordBuf >> BITS_UCHAR );
 }
 /*************************************************************************************
-*��������UCHAR xMBUtilGetBits( UCHAR * ucByteBuf, USHORT usBitOffset, UCHAR ucNBits )
-*�������:
-*ucByteBuf �洢λ�Ļ����ֽ�
-*usBitOffset λ����ʼ��ַ����һ��λ�ĵ�ַƫ������0
-*ucNBits ��Ҫ�޸ĵ�λ����������ֵҪС��8��
-*����ʾ��:
+*函数名：UCHAR xMBUtilGetBits( UCHAR * ucByteBuf, USHORT usBitOffset, UCHAR ucNBits )
+*输入参数:
+*ucByteBuf 存储位的缓冲字节
+*usBitOffset 位的起始地址，第一个位的地址偏移量是0
+*ucNBits 需要修改的位的数量。该值要小于8。
+*调用示例:
 *UCHAR ucBits[2] = {0, 0};
 UCHAR ucResult;
  
